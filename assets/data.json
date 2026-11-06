@@ -1,0 +1,1924 @@
+{
+ "slider": [
+  {
+   "difficulty": 0.0,
+   "src": "assets/img/slider/d00.jpg",
+   "ops": [],
+   "boxes_in_frame": 6
+  },
+  {
+   "difficulty": 0.1,
+   "src": "assets/img/slider/d01.jpg",
+   "ops": [
+    "illumination",
+    "motion_blur"
+   ],
+   "boxes_in_frame": 6
+  },
+  {
+   "difficulty": 0.2,
+   "src": "assets/img/slider/d02.jpg",
+   "ops": [
+    "illumination",
+    "motion_blur"
+   ],
+   "boxes_in_frame": 6
+  },
+  {
+   "difficulty": 0.3,
+   "src": "assets/img/slider/d03.jpg",
+   "ops": [
+    "illumination",
+    "motion_blur",
+    "shot_noise"
+   ],
+   "boxes_in_frame": 6
+  },
+  {
+   "difficulty": 0.4,
+   "src": "assets/img/slider/d04.jpg",
+   "ops": [
+    "illumination",
+    "motion_blur",
+    "shot_noise"
+   ],
+   "boxes_in_frame": 6
+  },
+  {
+   "difficulty": 0.5,
+   "src": "assets/img/slider/d05.jpg",
+   "ops": [
+    "background_composite",
+    "illumination",
+    "motion_blur",
+    "shot_noise"
+   ],
+   "boxes_in_frame": 6
+  },
+  {
+   "difficulty": 0.6,
+   "src": "assets/img/slider/d06.jpg",
+   "ops": [
+    "background_composite",
+    "illumination",
+    "motion_blur",
+    "shot_noise"
+   ],
+   "boxes_in_frame": 6
+  },
+  {
+   "difficulty": 0.7,
+   "src": "assets/img/slider/d07.jpg",
+   "ops": [
+    "halftone",
+    "background_composite",
+    "illumination",
+    "motion_blur",
+    "shot_noise"
+   ],
+   "boxes_in_frame": 6
+  },
+  {
+   "difficulty": 0.8,
+   "src": "assets/img/slider/d08.jpg",
+   "ops": [
+    "halftone",
+    "background_composite",
+    "illumination",
+    "motion_blur",
+    "shot_noise"
+   ],
+   "boxes_in_frame": 6
+  },
+  {
+   "difficulty": 0.9,
+   "src": "assets/img/slider/d09.jpg",
+   "ops": [
+    "halftone",
+    "background_composite",
+    "color_cast",
+    "illumination",
+    "motion_blur",
+    "shot_noise"
+   ],
+   "boxes_in_frame": 6
+  },
+  {
+   "difficulty": 1.0,
+   "src": "assets/img/slider/d10.jpg",
+   "ops": [
+    "halftone",
+    "background_composite",
+    "color_cast",
+    "illumination",
+    "motion_blur",
+    "shot_noise"
+   ],
+   "boxes_in_frame": 6
+  }
+ ],
+ "gallery": [
+  {
+   "name": "color_cast",
+   "label": "color cast",
+   "category": "color",
+   "summary": "wrong white balance; the whole page is tinted by the light source.",
+   "moves_points": false,
+   "src": "assets/img/gallery/color_cast.jpg",
+   "recipe": {
+    "op": "color_cast",
+    "severity": 1.0,
+    "params": {
+     "strength": 0.45,
+     "color": "#ffb366"
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "sepia",
+   "label": "sepia",
+   "category": "color",
+   "summary": "brown-toned monochrome, like an aged photograph or photocopy.",
+   "moves_points": false,
+   "src": "assets/img/gallery/sepia.jpg",
+   "recipe": {
+    "op": "sepia",
+    "severity": 1.0,
+    "params": {
+     "amount": 1.0
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "duotone",
+   "label": "duotone",
+   "category": "color",
+   "summary": "luminance mapped onto a two-colour ramp, as in a tinted print.",
+   "moves_points": false,
+   "src": "assets/img/gallery/duotone.jpg",
+   "recipe": {
+    "op": "duotone",
+    "severity": 1.0,
+    "params": {
+     "amount": 1.0,
+     "dark": "#1b2a49",
+     "light": "#bde0fe"
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "hue_shift",
+   "label": "hue shift",
+   "category": "color",
+   "summary": "every colour on the page moves around the colour wheel.",
+   "moves_points": false,
+   "src": "assets/img/gallery/hue_shift.jpg",
+   "recipe": {
+    "op": "hue_shift",
+    "severity": 1.0,
+    "params": {
+     "degrees": 180.0,
+     "direction": "forward"
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "saturation",
+   "label": "saturation",
+   "category": "color",
+   "summary": "colours boosted to garish, or drained towards grey.",
+   "moves_points": false,
+   "src": "assets/img/gallery/saturation.jpg",
+   "recipe": {
+    "op": "saturation",
+    "severity": 1.0,
+    "params": {
+     "amount": 1.0,
+     "mode": "boost"
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "gamma_contrast",
+   "label": "gamma contrast",
+   "category": "color",
+   "summary": "exposure pushed dark or light, and contrast flattened.",
+   "moves_points": false,
+   "src": "assets/img/gallery/gamma_contrast.jpg",
+   "recipe": {
+    "op": "gamma_contrast",
+    "severity": 1.0,
+    "params": {
+     "gamma": 1.0,
+     "direction": "darken",
+     "contrast": 0.45
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "paper",
+   "label": "paper",
+   "category": "color",
+   "summary": "tinted, unevenly toned stock with fibre texture under the ink.",
+   "moves_points": false,
+   "src": "assets/img/gallery/paper.jpg",
+   "recipe": {
+    "op": "paper",
+    "severity": 1.0,
+    "params": {
+     "amount": 1.0,
+     "color": "#f3e5c0"
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "faded_ink",
+   "label": "faded ink",
+   "category": "color",
+   "summary": "low-contrast, tinted strokes, like an old print or a dying cartridge.",
+   "moves_points": false,
+   "src": "assets/img/gallery/faded_ink.jpg",
+   "recipe": {
+    "op": "faded_ink",
+    "severity": 1.0,
+    "params": {
+     "amount": 1.0,
+     "ink": "#1f3a93",
+     "lift": 0.39019648678448166
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "invert",
+   "label": "invert",
+   "category": "color",
+   "summary": "light-on-dark, like a reversed-out banner or a dark-mode screenshot.",
+   "moves_points": false,
+   "src": "assets/img/gallery/invert.jpg",
+   "recipe": {
+    "op": "invert",
+    "severity": 1.0,
+    "params": {
+     "amount": 1.0
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "channel_swap",
+   "label": "channel swap",
+   "category": "color",
+   "summary": "RGB channels permuted, as from a mis-decoded image.",
+   "moves_points": false,
+   "src": "assets/img/gallery/channel_swap.jpg",
+   "recipe": {
+    "op": "channel_swap",
+    "severity": 1.0,
+    "params": {
+     "amount": 1.0,
+     "order": "gbr"
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "posterize",
+   "label": "posterize",
+   "category": "color",
+   "summary": "each channel quantised to a few levels, banding gradients and shading.",
+   "moves_points": false,
+   "src": "assets/img/gallery/posterize.jpg",
+   "recipe": {
+    "op": "posterize",
+    "severity": 1.0,
+    "params": {
+     "bits": 1.6
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "highlighter",
+   "label": "highlighter",
+   "category": "color",
+   "summary": "translucent marker strokes laid over lines of text.",
+   "moves_points": false,
+   "src": "assets/img/gallery/highlighter.jpg",
+   "recipe": {
+    "op": "highlighter",
+    "severity": 1.0,
+    "params": {
+     "strokes": 8,
+     "color": "#fff35c",
+     "opacity": 0.4901964867844817
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "stamp",
+   "label": "stamp",
+   "category": "color",
+   "summary": "a rotated, patchily inked word in a border, over the content. Adds words that are not in the ground truth.",
+   "moves_points": false,
+   "src": "assets/img/gallery/stamp.jpg",
+   "recipe": {
+    "op": "stamp",
+    "severity": 1.0,
+    "params": {
+     "count": 3,
+     "color": "#c0282d",
+     "opacity": 0.5901964867844817
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "illumination",
+   "label": "illumination",
+   "category": "color",
+   "summary": "a brightness gradient across the page plus, optionally, a soft shadow cast by a hand or phone.",
+   "moves_points": false,
+   "src": "assets/img/gallery/illumination.jpg",
+   "recipe": {
+    "op": "illumination",
+    "severity": 1.0,
+    "params": {
+     "strength": 0.55,
+     "shadow": "none"
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "color_bleed",
+   "label": "color bleed",
+   "category": "color",
+   "summary": "chroma misregistered and smeared relative to luma, as in cheap video/scan paths.",
+   "moves_points": false,
+   "src": "assets/img/gallery/color_bleed.jpg",
+   "recipe": {
+    "op": "color_bleed",
+    "severity": 1.0,
+    "params": {
+     "shift": 0.008
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "perspective",
+   "label": "perspective",
+   "category": "geometric",
+   "summary": "the page photographed off-axis; each corner moves inward independently and the uncovered surface shows through.",
+   "moves_points": true,
+   "src": "assets/img/gallery/perspective.jpg",
+   "recipe": {
+    "op": "perspective",
+    "severity": 1.0,
+    "params": {
+     "jitter": 0.14,
+     "background": "#ffffff"
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "rotation",
+   "label": "rotation",
+   "category": "geometric",
+   "summary": "the page skewed on the scanner bed or in the camera frame.",
+   "moves_points": true,
+   "src": "assets/img/gallery/rotation.jpg",
+   "recipe": {
+    "op": "rotation",
+    "severity": 1.0,
+    "params": {
+     "angle": 7.0,
+     "direction": "cw",
+     "background": "#5d6d7e"
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "shear",
+   "label": "shear",
+   "category": "geometric",
+   "summary": "rows slide sideways in proportion to height, like a feed-skewed scan.",
+   "moves_points": true,
+   "src": "assets/img/gallery/shear.jpg",
+   "recipe": {
+    "op": "shear",
+    "severity": 1.0,
+    "params": {
+     "amount": 0.12,
+     "direction": "left",
+     "background": "#5d6d7e"
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "page_curl",
+   "label": "page curl",
+   "category": "geometric",
+   "summary": "an open book photographed flat; text lines bend and compress towards the spine, which is shaded.",
+   "moves_points": true,
+   "src": "assets/img/gallery/page_curl.jpg",
+   "recipe": {
+    "op": "page_curl",
+    "severity": 1.0,
+    "params": {
+     "amount": 0.06,
+     "spine": "left",
+     "reach": 0.41029473017672247
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "cylinder",
+   "label": "cylinder",
+   "category": "geometric",
+   "summary": "the page bends around a vertical axis, so text lines smile or frown.",
+   "moves_points": true,
+   "src": "assets/img/gallery/cylinder.jpg",
+   "recipe": {
+    "op": "cylinder",
+    "severity": 1.0,
+    "params": {
+     "amount": 0.04,
+     "direction": "smile"
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "wave",
+   "label": "wave",
+   "category": "geometric",
+   "summary": "sinusoidal ripple, like cockled paper or a page that got wet.",
+   "moves_points": true,
+   "src": "assets/img/gallery/wave.jpg",
+   "recipe": {
+    "op": "wave",
+    "severity": 1.0,
+    "params": {
+     "amplitude": 0.01,
+     "wavelength": 0.3833005932081876,
+     "axes": "columns"
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "fold",
+   "label": "fold",
+   "category": "geometric",
+   "summary": "creases across the page that offset the content and cast a shadow line.",
+   "moves_points": true,
+   "src": "assets/img/gallery/fold.jpg",
+   "recipe": {
+    "op": "fold",
+    "severity": 1.0,
+    "params": {
+     "amount": 0.008,
+     "folds": 1,
+     "shadow": 0.2834970723204014
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "crumple",
+   "label": "crumple",
+   "category": "geometric",
+   "summary": "a random height field displaces the page and lights it obliquely, like paper that was balled up and flattened.",
+   "moves_points": true,
+   "src": "assets/img/gallery/crumple.jpg",
+   "recipe": {
+    "op": "crumple",
+    "severity": 1.0,
+    "params": {
+     "amount": 0.012,
+     "cells": 5
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "elastic",
+   "label": "elastic",
+   "category": "geometric",
+   "summary": "small smooth random displacements that wobble strokes and lines.",
+   "moves_points": true,
+   "src": "assets/img/gallery/elastic.jpg",
+   "recipe": {
+    "op": "elastic",
+    "severity": 1.0,
+    "params": {
+     "amount": 0.004,
+     "scale": 0.015700548170827965
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "barrel",
+   "label": "barrel",
+   "category": "optical",
+   "summary": "straight lines bow outward and the page shrinks towards its edges; the centre keeps its scale.",
+   "moves_points": true,
+   "src": "assets/img/gallery/barrel.jpg",
+   "recipe": {
+    "op": "barrel",
+    "severity": 1.0,
+    "params": {
+     "k": 0.3
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "pincushion",
+   "label": "pincushion",
+   "category": "optical",
+   "summary": "straight lines bow inward and magnification rises towards the edge. Normalised so the corners stay fixed.",
+   "moves_points": true,
+   "src": "assets/img/gallery/pincushion.jpg",
+   "recipe": {
+    "op": "pincushion",
+    "severity": 1.0,
+    "params": {
+     "k": 0.2
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "mustache",
+   "label": "mustache",
+   "category": "optical",
+   "summary": "barrel near the centre turning to pincushion at the edge, as in cheap wide-angle phone lenses.",
+   "moves_points": true,
+   "src": "assets/img/gallery/mustache.jpg",
+   "recipe": {
+    "op": "mustache",
+    "severity": 1.0,
+    "params": {
+     "k": 0.4
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "fisheye",
+   "label": "fisheye",
+   "category": "optical",
+   "summary": "the frame centre is magnified up to 1/(1 - a) and the rim is pinned. On an ellipse region, a patch of the page looks shot through a fisheye lens.",
+   "moves_points": true,
+   "src": "assets/img/gallery/fisheye.jpg",
+   "recipe": {
+    "op": "fisheye",
+    "severity": 1.0,
+    "params": {
+     "a": 0.75
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "pinch",
+   "label": "pinch",
+   "category": "optical",
+   "summary": "the frame centre shrinks towards a point, the inverse of a bulge.",
+   "moves_points": true,
+   "src": "assets/img/gallery/pinch.jpg",
+   "recipe": {
+    "op": "pinch",
+    "severity": 1.0,
+    "params": {
+     "a": 0.6
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "swirl",
+   "label": "swirl",
+   "category": "optical",
+   "summary": "content rotates about the frame centre, most strongly at the centre.",
+   "moves_points": true,
+   "src": "assets/img/gallery/swirl.jpg",
+   "recipe": {
+    "op": "swirl",
+    "severity": 1.0,
+    "params": {
+     "angle": 3.0,
+     "direction": "cw"
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "magnifier",
+   "label": "magnifier",
+   "category": "optical",
+   "summary": "a flat zoomed disc with a compressed rim and a dark lens edge, like a loupe held over the page.",
+   "moves_points": true,
+   "src": "assets/img/gallery/magnifier.jpg",
+   "recipe": {
+    "op": "magnifier",
+    "severity": 1.0,
+    "params": {
+     "zoom": 2.6,
+     "flat": 0.7732240744790708
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "chromatic_aberration",
+   "label": "chromatic aberration",
+   "category": "optical",
+   "summary": "red and blue are magnified differently, leaving colour fringes that grow towards the edge.",
+   "moves_points": false,
+   "src": "assets/img/gallery/chromatic_aberration.jpg",
+   "recipe": {
+    "op": "chromatic_aberration",
+    "severity": 1.0,
+    "params": {
+     "shift": 0.012
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "vignette",
+   "label": "vignette",
+   "category": "optical",
+   "summary": "brightness falls off towards the frame's edge.",
+   "moves_points": false,
+   "src": "assets/img/gallery/vignette.jpg",
+   "recipe": {
+    "op": "vignette",
+    "severity": 1.0,
+    "params": {
+     "strength": 0.75
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "defocus",
+   "label": "defocus",
+   "category": "optical",
+   "summary": "a disk (bokeh) kernel, the blur of a lens focused at the wrong distance.",
+   "moves_points": false,
+   "src": "assets/img/gallery/defocus.jpg",
+   "recipe": {
+    "op": "defocus",
+    "severity": 1.0,
+    "params": {
+     "radius": 0.005
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "motion_blur",
+   "label": "motion blur",
+   "category": "optical",
+   "summary": "camera shake along one direction.",
+   "moves_points": false,
+   "src": "assets/img/gallery/motion_blur.jpg",
+   "recipe": {
+    "op": "motion_blur",
+    "severity": 1.0,
+    "params": {
+     "length": 0.012,
+     "angle": 124.72133362493096
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "tilt_shift",
+   "label": "tilt shift",
+   "category": "optical",
+   "summary": "one band of the page is sharp and blur grows with distance from it, as with a phone held at an angle.",
+   "moves_points": false,
+   "src": "assets/img/gallery/tilt_shift.jpg",
+   "recipe": {
+    "op": "tilt_shift",
+    "severity": 1.0,
+    "params": {
+     "sigma": 0.006,
+     "center": 0.61573777874977,
+     "band": 0.1334970723204014
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "glare",
+   "label": "glare",
+   "category": "optical",
+   "summary": "a bright hotspot from a lamp or flash that washes out the ink beneath it.",
+   "moves_points": false,
+   "src": "assets/img/gallery/glare.jpg",
+   "recipe": {
+    "op": "glare",
+    "severity": 1.0,
+    "params": {
+     "intensity": 0.9,
+     "radius": 0.357868889374885,
+     "color": "#fff2d6",
+     "count": 1
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "gaussian_noise",
+   "label": "gaussian noise",
+   "category": "sensor",
+   "summary": "additive sensor read noise, in colour or luminance only.",
+   "moves_points": false,
+   "src": "assets/img/gallery/gaussian_noise.jpg",
+   "recipe": {
+    "op": "gaussian_noise",
+    "severity": 1.0,
+    "params": {
+     "sigma": 0.14,
+     "mode": "color"
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "shot_noise",
+   "label": "shot noise",
+   "category": "sensor",
+   "summary": "Poisson photon noise of a dim exposure, worst in the dark areas.",
+   "moves_points": false,
+   "src": "assets/img/gallery/shot_noise.jpg",
+   "recipe": {
+    "op": "shot_noise",
+    "severity": 1.0,
+    "params": {
+     "amount": 1.0,
+     "photons": 30.17268153332106
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "salt_pepper",
+   "label": "salt pepper",
+   "category": "sensor",
+   "summary": "isolated black and white pixels, like dust and toner specks.",
+   "moves_points": false,
+   "src": "assets/img/gallery/salt_pepper.jpg",
+   "recipe": {
+    "op": "salt_pepper",
+    "severity": 1.0,
+    "params": {
+     "density": 0.03
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "jpeg",
+   "label": "JPEG",
+   "category": "sensor",
+   "summary": "blocking, ringing and (4:2:0) blurred colour edges.",
+   "moves_points": false,
+   "src": "assets/img/gallery/jpeg.jpg",
+   "recipe": {
+    "op": "jpeg",
+    "severity": 1.0,
+    "params": {
+     "quality": 6,
+     "subsampling": "4:2:0"
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "resample",
+   "label": "resample",
+   "category": "sensor",
+   "summary": "downscaled then upscaled, losing fine strokes; nearest gives pixelation.",
+   "moves_points": false,
+   "src": "assets/img/gallery/resample.jpg",
+   "recipe": {
+    "op": "resample",
+    "severity": 1.0,
+    "params": {
+     "factor": 0.22,
+     "method": "nearest"
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "streaks",
+   "label": "streaks",
+   "category": "sensor",
+   "summary": "dark or light lines along the scan direction from dirt on the glass or sensor.",
+   "moves_points": false,
+   "src": "assets/img/gallery/streaks.jpg",
+   "recipe": {
+    "op": "streaks",
+    "severity": 1.0,
+    "params": {
+     "count": 14,
+     "orientation": "horizontal",
+     "darkness": 0.20359531571264222
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "halftone",
+   "label": "halftone",
+   "category": "sensor",
+   "summary": "printed through a rotated dot screen, so shading turns to dots and moir\u00e9.",
+   "moves_points": false,
+   "src": "assets/img/gallery/halftone.jpg",
+   "recipe": {
+    "op": "halftone",
+    "severity": 1.0,
+    "params": {
+     "amount": 1.0,
+     "period": 0.005771585191665133,
+     "angle": 12.0589460353445
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "bleed_through",
+   "label": "bleed through",
+   "category": "sensor",
+   "summary": "a mirrored, blurred ghost of the reverse side shows through thin paper.",
+   "moves_points": false,
+   "src": "assets/img/gallery/bleed_through.jpg",
+   "recipe": {
+    "op": "bleed_through",
+    "severity": 1.0,
+    "params": {
+     "amount": 0.5,
+     "flip": "horizontal"
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "stains",
+   "label": "stains",
+   "category": "sensor",
+   "summary": "irregular translucent blots with darker drying rings, like coffee or water.",
+   "moves_points": false,
+   "src": "assets/img/gallery/stains.jpg",
+   "recipe": {
+    "op": "stains",
+    "severity": 1.0,
+    "params": {
+     "count": 5,
+     "color": "#8b5a2b",
+     "radius": 0.06473871182097661
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "smudge",
+   "label": "smudge",
+   "category": "sensor",
+   "summary": "wet ink dragged in one direction in a few spots, darkening and smearing text.",
+   "moves_points": false,
+   "src": "assets/img/gallery/smudge.jpg",
+   "recipe": {
+    "op": "smudge",
+    "severity": 1.0,
+    "params": {
+     "count": 6,
+     "length": 0.02385792595832566,
+     "angle": 24.117892070689
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "binarize",
+   "label": "binarize",
+   "category": "sensor",
+   "summary": "a fax-like 1-bit threshold, global or adaptive, that drops faint ink and fills shading.",
+   "moves_points": false,
+   "src": "assets/img/gallery/binarize.jpg",
+   "recipe": {
+    "op": "binarize",
+    "severity": 1.0,
+    "params": {
+     "amount": 1.0,
+     "method": "global",
+     "offset": -0.05320234214367889
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  },
+  {
+   "name": "background_composite",
+   "label": "background composite",
+   "category": "geometric",
+   "summary": "the page photographed lying on a desk/table, scaled down, rotated, in perspective and off-centre, with a drop shadow; at high severity part of the page leaves the frame.",
+   "moves_points": true,
+   "src": "assets/img/gallery/background_composite.jpg",
+   "recipe": {
+    "op": "background_composite",
+    "severity": 1.0,
+    "params": {
+     "scale": 0.6,
+     "tilt": 0.12,
+     "angle": 12.0,
+     "shift": 0.3,
+     "direction": "cw",
+     "background": "cork",
+     "shadow": 0.24689590124856195
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   }
+  }
+ ],
+ "keys": [
+  {
+   "value": "INV-2026-49354",
+   "field": "invoice_004.invoice_no",
+   "colour": "#2554d6"
+  },
+  {
+   "value": "2026-07-15",
+   "field": "invoice_004.issue_date",
+   "colour": "#d64825"
+  },
+  {
+   "value": "1Z7222695482",
+   "field": "shipment_004.tracking_no",
+   "colour": "#168c5c"
+  },
+  {
+   "value": "128.97",
+   "field": "line_005.line_total",
+   "colour": "#9c36b5"
+  },
+  {
+   "value": "330.65",
+   "field": "line_006.line_total",
+   "colour": "#c88200"
+  },
+  {
+   "value": "519.37",
+   "field": "invoice_004.total",
+   "colour": "#008caa"
+  }
+ ],
+ "stack_recipe": {
+  "version": 2,
+  "seed": 7,
+  "steps": [
+   {
+    "op": "rotation",
+    "severity": 0.7,
+    "params": {
+     "angle": 4.8999999999999995,
+     "direction": "cw",
+     "background": "#5d6d7e"
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 2083679832
+   },
+   {
+    "op": "shear",
+    "severity": 0.7,
+    "params": {
+     "amount": 0.08399999999999999,
+     "direction": "left",
+     "background": "#d9d4c7"
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 369571992
+   },
+   {
+    "op": "crumple",
+    "severity": 0.9,
+    "params": {
+     "amount": 0.0108,
+     "cells": 14
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 1009178997
+   },
+   {
+    "op": "stains",
+    "severity": 0.8,
+    "params": {
+     "count": 4,
+     "color": "#9aa4ad",
+     "radius": 0.06721314164873754
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 3466196061
+   },
+   {
+    "op": "background_composite",
+    "severity": 0.7,
+    "params": {
+     "scale": 0.72,
+     "tilt": 0.08399999999999999,
+     "angle": 8.399999999999999,
+     "shift": 0.21,
+     "direction": "cw",
+     "background": "cork",
+     "shadow": 0.5207560416939063
+    },
+    "region": {
+     "feather": 0.15,
+     "frames": [
+      {
+       "shape": "full",
+       "box": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+       ]
+      }
+     ]
+    },
+    "seed": 3335713882
+   }
+  ]
+ },
+ "stack_key": {
+  "document_id": "doc-log-1-bill-of-lading",
+  "root_object": "shipment_002",
+  "scope": [
+   "carrier_003",
+   "consignment_003",
+   "consignment_004",
+   "party_001",
+   "party_003",
+   "shipment_002",
+   "warehouse_001",
+   "warehouse_004"
+  ],
+  "joins_on_page": [
+   {
+    "child_object": "shipment_002",
+    "child_class": "Shipment",
+    "column": "shipper_id",
+    "parent_object": "party_001",
+    "parent_class": "Party"
+   },
+   {
+    "child_object": "shipment_002",
+    "child_class": "Shipment",
+    "column": "consignee_id",
+    "parent_object": "party_003",
+    "parent_class": "Party"
+   },
+   {
+    "child_object": "shipment_002",
+    "child_class": "Shipment",
+    "column": "carrier_id",
+    "parent_object": "carrier_003",
+    "parent_class": "Carrier"
+   },
+   {
+    "child_object": "shipment_002",
+    "child_class": "Shipment",
+    "column": "origin_id",
+    "parent_object": "warehouse_001",
+    "parent_class": "Warehouse"
+   },
+   {
+    "child_object": "shipment_002",
+    "child_class": "Shipment",
+    "column": "destination_id",
+    "parent_object": "warehouse_004",
+    "parent_class": "Warehouse"
+   },
+   {
+    "child_object": "consignment_003",
+    "child_class": "Consignment",
+    "column": "shipment_id",
+    "parent_object": "shipment_002",
+    "parent_class": "Shipment"
+   },
+   {
+    "child_object": "consignment_004",
+    "child_class": "Consignment",
+    "column": "shipment_id",
+    "parent_object": "shipment_002",
+    "parent_class": "Shipment"
+   }
+  ],
+  "boxed": [
+   {
+    "printed": "2026-08-18",
+    "field": "shipment_002.ship_date",
+    "value": "2026-08-18"
+   },
+   {
+    "printed": "1450",
+    "field": "party_001.address",
+    "value": "1450 Wentworth St W"
+   },
+   {
+    "printed": "2026-09-01",
+    "field": "shipment_002.eta",
+    "value": "2026-09-01"
+   },
+   {
+    "printed": "8482.10",
+    "field": "consignment_003.hs_code",
+    "value": "8482.10"
+   },
+   {
+    "printed": "460.3",
+    "field": "consignment_003.gross_kg",
+    "value": 460.3
+   },
+   {
+    "printed": "7,650.00",
+    "field": "consignment_003.value_cad",
+    "value": 7650.0
+   },
+   {
+    "printed": "8481.20",
+    "field": "consignment_004.hs_code",
+    "value": "8481.20"
+   },
+   {
+    "printed": "483.3",
+    "field": "consignment_004.gross_kg",
+    "value": 483.3
+   },
+   {
+    "printed": "20,100.00",
+    "field": "consignment_004.value_cad",
+    "value": 20100.0
+   }
+  ]
+ }
+}

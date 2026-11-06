@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strata</title>
+<meta name="description" content="Strata generates document benchmarks whose answer key is known by construction.">
+<style>
+@font-face { font-family: "Schibsted Grotesk"; src: url("assets/fonts/SchibstedGrotesk.ttf") format("truetype"); font-weight: 400 900; font-display: swap; }
+@font-face { font-family: "Schibsted Grotesk"; src: url("assets/fonts/SchibstedGrotesk-Italic.ttf") format("truetype"); font-weight: 400 900; font-style: italic; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono.woff2") format("woff2"); font-weight: 100 800; font-display: swap; }
+
+:root {
+  --ink: #1d1d1f; --ink-2: #6e6e73; --line: #d2d2d7;
+  --paper: #fbfbfd; --white: #fff; --night: #000; --night-ink: #f5f5f7; --night-2: #a1a1a6; --night-card: #1d1d1f;
+  --accent: #2f45c8; --accent-night: #7d8cff;
+  --z0: #e4572e; --z1: #d4870a; --z2: #12808a; --z3: #6a4c93; --z4: #b5179e; --z5: #2e7d32; --z6: #7a4a1c;
+  --sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Schibsted Grotesk", "Helvetica Neue", sans-serif;
+  --mono: "SF Mono", "JetBrains Mono", ui-monospace, monospace;
+  --wrap: min(1120px, calc(100vw - 44px));
+  --r: 22px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { font-family: var(--sans); color: var(--ink); background: var(--paper); font-size: 19px; line-height: 1.47; letter-spacing: -0.011em; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+.mono { font-family: var(--mono); letter-spacing: 0; }
+.wrap { width: var(--wrap); margin: 0 auto; }
+
+/* ---------- nav ---------- */
+nav.top { position: sticky; top: 0; z-index: 50; height: 52px; background: rgba(251, 251, 253, 0.8); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(0,0,0,0.08); }
+nav.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 100%; }
+nav.top .brand { font-weight: 700; font-size: 21px; letter-spacing: -0.02em; text-decoration: none; }
+nav.top ul { display: flex; gap: 28px; list-style: none; font-size: 14px; }
+nav.top ul a { text-decoration: none; color: var(--ink); opacity: 0.8; }
+nav.top ul a:hover { opacity: 1; }
+@media (max-width: 720px) { nav.top ul { gap: 16px; font-size: 13px; } nav.top ul li.opt { display: none; } }
+
+/* ---------- section scaffolding ---------- */
+section { padding: 120px 0; }
+section.night { background: var(--night); color: var(--night-ink); }
+section.white { background: var(--white); }
+.eyebrow { font-size: 21px; font-weight: 600; color: var(--accent); margin-bottom: 8px; letter-spacing: -0.01em; }
+.night .eyebrow { color: var(--accent-night); }
+h1, h2 { font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; }
+h1 { font-size: clamp(48px, 8vw, 96px); }
+h2 { font-size: clamp(40px, 6vw, 72px); }
+h3 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+.lead { font-size: clamp(21px, 2.4vw, 28px); line-height: 1.3; font-weight: 500; color: var(--ink-2); max-width: 820px; margin-top: 22px; letter-spacing: -0.015em; }
+.night .lead { color: var(--night-2); }
+.center { text-align: center; }
+.center .lead { margin-left: auto; margin-right: auto; }
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s cubic-bezier(.2,.7,.2,1), transform 0.9s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+
+/* ---------- hero ---------- */
+.hero { padding: 96px 0 0; text-align: center; background: var(--paper); overflow: hidden; }
+.hero h1 .blue { color: var(--accent); }
+.hero .domains { margin-top: 26px; font-size: clamp(20px, 2.6vw, 30px); font-weight: 600; letter-spacing: -0.015em; color: var(--ink-2); }
+.hero .domains b { color: var(--accent); }
+.hero .domains i { font-style: normal; margin: 0 0.1em; color: var(--line); }
+.cta { display: flex; justify-content: center; gap: 22px; margin-top: 30px; font-size: 19px; flex-wrap: wrap; }
+.btn { display: inline-block; padding: 12px 24px; border-radius: 980px; background: var(--accent); color: #fff; text-decoration: none; font-weight: 500; }
+.link { color: var(--accent); text-decoration: none; padding: 12px 0; }
+.link::after { content: " ›"; }
+.night .link { color: var(--accent-night); }
+
+/* before/after wipe */
+.wipe { position: relative; margin: 64px auto 0; width: min(1240px, calc(100vw - 32px)); aspect-ratio: 2550 / 1758; border-radius: var(--r) var(--r) 0 0; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.18); background: #ddd; cursor: ew-resize; touch-action: pan-y; user-select: none; }
+.wipe img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.wipe .top-img { clip-path: inset(0 calc(100% - var(--x, 50%)) 0 0); }
+.wipe .bar { position: absolute; top: 0; bottom: 0; left: var(--x, 50%); width: 3px; margin-left: -1.5px; background: #fff; box-shadow: 0 0 12px rgba(0,0,0,0.4); }
+.wipe .knob { position: absolute; top: 50%; left: var(--x, 50%); width: 52px; height: 52px; margin: -26px 0 0 -26px; border-radius: 50%; background: rgba(255,255,255,0.92); backdrop-filter: blur(8px); box-shadow: 0 4px 20px rgba(0,0,0,0.3); display: grid; place-items: center; font-size: 18px; color: var(--ink); }
+.wipe .lab { position: absolute; top: 18px; padding: 6px 14px; border-radius: 980px; background: rgba(0,0,0,0.62); color: #fff; font-size: 14px; font-weight: 600; backdrop-filter: blur(8px); }
+.wipe .lab.l { left: 18px; } .wipe .lab.r { right: 18px; }
+.wipe-note { font-size: 15px; color: var(--ink-2); margin: 16px auto 0; padding-bottom: 8px; }
+
+/* ---------- pipeline ---------- */
+.stepper { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; margin-top: 64px; }
+.step { appearance: none; border: 2px solid var(--zc); background: #fff; border-radius: 16px; padding: 16px 8px 14px; cursor: pointer; font: inherit; text-align: center; transition: transform .25s, box-shadow .25s, background .25s; position: relative; }
+.step .num { display: block; font-size: 13px; font-weight: 600; color: var(--ink-2); }
+.step b { display: block; font-size: 17px; letter-spacing: -0.01em; }
+.step[aria-selected="true"] { background: var(--zc); color: #fff; box-shadow: 0 12px 30px color-mix(in srgb, var(--zc) 40%, transparent); transform: translateY(-3px); }
+.step[aria-selected="true"] .num { color: rgba(255,255,255,0.8); }
+.step:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+@media (max-width: 760px) { .stepper { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; } .step { padding: 12px 4px; } .step b { font-size: 13px; overflow-wrap: anywhere; } }
+.stage-view { margin-top: 28px; background: #fff; border-radius: var(--r); border: 3px solid var(--zc, var(--line)); box-shadow: 0 20px 60px rgba(0,0,0,0.07); display: grid; grid-template-columns: 1fr 1.5fr; min-height: 460px; overflow: hidden; transition: border-color .3s; }
+.stage-view .txt { padding: 48px 44px; display: flex; flex-direction: column; justify-content: center; }
+.stage-view .txt .k { font-size: 15px; font-weight: 700; color: var(--zc); text-transform: uppercase; letter-spacing: 0.06em; }
+.stage-view .txt h3 { margin-top: 8px; }
+.stage-view .txt p { margin-top: 14px; color: var(--ink-2); font-size: 19px; }
+.stage-view .txt .params { margin-top: 18px; font-size: 15px; color: var(--ink); }
+.stage-view .txt .params span { display: inline-block; border: 1px solid var(--line); border-radius: 980px; padding: 3px 12px; margin: 0 6px 6px 0; }
+.stage-view .fig { background: #f5f5f7; display: grid; place-items: center; padding: 36px; }
+.stage-view .fig > * { width: 100%; }
+.stage-view .fig img { border-radius: 10px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+@media (max-width: 860px) { .stage-view { grid-template-columns: 1fr; } .stage-view .txt { padding: 32px 26px 8px; } .stage-view .fig { padding: 22px; } }
+.panel { display: none; } .panel.on { display: contents; }
+.fig svg { width: 100%; height: auto; display: block; }
+.quote { font-size: clamp(22px, 2.6vw, 30px); font-style: italic; line-height: 1.35; letter-spacing: -0.015em; padding: 10px; }
+.kv { font-size: 18px; border-collapse: collapse; margin: 0 auto; width: auto !important; }
+.kv th { text-align: right; font-weight: 500; color: var(--ink-2); padding: 4px 18px 4px 0; }
+.kv td { font-family: var(--mono); font-weight: 600; }
+.kv .hi { color: var(--accent); font-size: 22px; }
+.code { font-family: var(--mono); font-size: 15px; line-height: 1.5; white-space: pre; overflow-x: auto; background: #fff; border-radius: 12px; padding: 22px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+.code .h { color: var(--accent); font-weight: 700; }
+.code .c { color: var(--ink-2); }
+
+/* ---------- difficulty slider (night) ---------- */
+.dial { margin-top: 64px; }
+.dial .frame { position: relative; border-radius: var(--r); overflow: hidden; background: #111; aspect-ratio: 2550 / 1758; box-shadow: 0 30px 90px rgba(0,0,0,0.6); }
+.dial .frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .25s; }
+.dial .frame img.on { opacity: 1; }
+.dial .controls { display: grid; grid-template-columns: auto 1fr auto; gap: 22px; align-items: center; margin-top: 34px; }
+.dial .val { font-size: 56px; font-weight: 700; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; min-width: 2.6ch; }
+.dial .val small { display: block; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; color: var(--night-2); text-transform: uppercase; }
+input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 6px; background: linear-gradient(90deg, var(--accent-night) var(--p, 0%), #3a3a3c var(--p, 0%)); outline: none; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 30px; height: 30px; border-radius: 50%; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.5); cursor: pointer; }
+input[type=range]::-moz-range-thumb { width: 30px; height: 30px; border: 0; border-radius: 50%; background: #fff; cursor: pointer; }
+input[type=range]:focus-visible { outline: 3px solid var(--accent-night); outline-offset: 6px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; min-height: 36px; }
+.chip { padding: 6px 14px; border-radius: 980px; background: var(--night-card); color: var(--night-ink); font-size: 14px; font-weight: 500; border: 1px solid #333; animation: pop .35s ease; }
+.chip.none { color: var(--night-2); }
+@keyframes pop { from { opacity: 0; transform: scale(.9); } }
+.boxes-ok { font-size: 15px; color: var(--night-2); text-align: right; }
+.boxes-ok b { color: var(--night-ink); font-size: 22px; display: block; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 30px; font-size: 14px; color: var(--night-2); }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.legend i { width: 14px; height: 10px; border: 2.5px solid; border-radius: 2px; }
+@media (max-width: 640px) { .dial .controls { grid-template-columns: 1fr; } .boxes-ok { text-align: left; } }
+
+/* ---------- stack ---------- */
+.stack { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items: center; margin-top: 64px; }
+.stack img { border-radius: var(--r); box-shadow: 0 30px 80px rgba(0,0,0,0.15); }
+.stack .recipe { font-family: var(--mono); font-size: 14px; line-height: 1.55; background: var(--night); color: var(--night-ink); border-radius: var(--r); padding: 28px; white-space: pre; overflow-x: auto; }
+.stack .recipe .o { color: #ffb86b; }
+@media (max-width: 860px) { .stack { grid-template-columns: 1fr; } }
+
+.akey { margin-top: 40px; background: var(--night); color: var(--night-ink); border-radius: var(--r); padding: 32px 28px; }
+.akhead h3 { font-size: 24px; }
+.akhead p { color: var(--night-2); font-size: 16px; margin-top: 4px; }
+.akcols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; margin-top: 24px; }
+.aklabel { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--night-2); margin-bottom: 10px; }
+.akcode { font-family: var(--mono); font-size: 12px; line-height: 1.6; white-space: pre; overflow-x: auto; background: #111; border-radius: 14px; padding: 16px 14px; }
+.akcode .f { color: #9db1ff; } .akcode .v { color: #ffb86b; } .akcode .c { color: #6e6e73; }
+@media (max-width: 860px) { .akcols { grid-template-columns: minmax(0, 1fr); } .akey { padding: 24px 18px; } }
+
+/* ---------- gallery ---------- */
+.seg { display: inline-flex; background: #e8e8ed; border-radius: 980px; padding: 4px; margin-top: 40px; gap: 2px; flex-wrap: wrap; justify-content: center; }
+.seg button { appearance: none; border: 0; background: transparent; font: inherit; font-size: 15px; padding: 8px 20px; border-radius: 980px; cursor: pointer; color: var(--ink); }
+.seg button[aria-pressed="true"] { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.12); font-weight: 600; }
+.seg button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 22px; margin-top: 40px; }
+.card { appearance: none; border: 0; text-align: left; font: inherit; color: inherit; background: #fff; border-radius: 18px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); cursor: pointer; transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s; }
+.card:hover { transform: translateY(-4px) scale(1.01); box-shadow: 0 18px 44px rgba(0,0,0,0.12); }
+.card:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.card img { width: 100%; aspect-ratio: 2318 / 1126; object-fit: cover; background: #eee; }
+.card .t { padding: 14px 18px 18px; }
+.card .t b { display: block; font-size: 17px; }
+.card .t b::first-letter { text-transform: uppercase; }
+.card .t span { font-size: 13px; color: var(--ink-2); text-transform: capitalize; }
+
+dialog { margin: auto; inset: 0; border: 0; border-radius: var(--r); padding: 0; overflow-y: auto; width: min(980px, calc(100vw - 32px)); max-height: calc(100vh - 40px); box-shadow: 0 40px 120px rgba(0,0,0,0.4); }
+dialog::backdrop { background: rgba(0,0,0,0.55); backdrop-filter: blur(6px); }
+dialog .dimg { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: #000; }
+dialog .dimg figure { position: relative; }
+dialog .dimg figcaption { position: absolute; left: 12px; top: 12px; font-size: 12px; font-weight: 600; background: rgba(0,0,0,0.6); color: #fff; padding: 4px 10px; border-radius: 980px; }
+dialog .dbody { padding: 26px 30px 30px; }
+dialog h3 { text-transform: capitalize; }
+dialog p { color: var(--ink-2); margin-top: 8px; }
+dialog pre { font-family: var(--mono); font-size: 13px; background: #f5f5f7; border-radius: 12px; padding: 16px; margin-top: 16px; overflow-x: auto; max-height: 220px; }
+dialog .x { position: absolute; right: 14px; top: 14px; width: 36px; height: 36px; border-radius: 50%; border: 0; background: rgba(255,255,255,0.9); font-size: 20px; cursor: pointer; z-index: 2; }
+@media (max-width: 640px) { dialog .dimg { grid-template-columns: 1fr; } }
+
+/* ---------- results ---------- */
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 64px; }
+.stat { background: var(--night-card); border-radius: var(--r); padding: 36px 30px; }
+.stat b { display: block; font-size: clamp(48px, 6vw, 72px); font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
+.stat span { display: block; margin-top: 10px; color: var(--night-2); font-size: 17px; }
+@media (max-width: 760px) { .stats { grid-template-columns: 1fr; } }
+.results { display: grid; grid-template-columns: 1.6fr 1fr; gap: 22px; margin-top: 22px; }
+@media (max-width: 960px) { .results { grid-template-columns: 1fr; } }
+.tablecard, .chartcard { background: var(--night-card); border-radius: var(--r); padding: 30px; overflow-x: auto; }
+.tablecard h3, .chartcard h3 { font-size: 21px; margin-bottom: 4px; }
+.tablecard p, .chartcard p { font-size: 14px; color: var(--night-2); margin-bottom: 18px; }
+table.t1 { border-collapse: collapse; width: 100%; font-size: 15px; font-variant-numeric: tabular-nums; }
+table.t1 th, table.t1 td { padding: 9px 10px; text-align: right; white-space: nowrap; }
+table.t1 th:first-child, table.t1 td:first-child { text-align: left; padding-left: 0; }
+table.t1 thead th { color: var(--night-2); font-weight: 600; border-bottom: 1px solid #424245; font-size: 13px; }
+table.t1 tbody td { border-bottom: 1px solid #2c2c2e; }
+table.t1 .best { color: var(--accent-night); font-weight: 700; }
+.chartcard svg { width: 100%; height: auto; display: block; }
+
+/* ---------- agentic ---------- */
+.flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 64px; position: relative; }
+.flow::before { content: ""; position: absolute; left: 12.5%; right: 12.5%; top: 34px; height: 2px; background: var(--ink); }
+.node { text-align: center; position: relative; }
+.node .dot { width: 68px; height: 68px; margin: 0 auto; border-radius: 50%; background: #fff; border: 2px solid var(--ink); display: grid; place-items: center; font-weight: 700; font-size: 15px; position: relative; }
+.node.first .dot { background: var(--ink); color: #fff; }
+.node h3 { font-size: 24px; margin-top: 18px; }
+.node p { font-size: 16px; color: var(--accent); font-weight: 600; margin-top: 4px; }
+@media (max-width: 640px) { .flow { grid-template-columns: repeat(2, 1fr); row-gap: 36px; } .flow::before { display: none; } }
+
+/* ---------- footer ---------- */
+footer { background: #f5f5f7; padding: 60px 0 40px; font-size: 14px; color: var(--ink-2); }
+footer .wrap { display: grid; grid-template-columns: 1fr auto; gap: 30px; align-items: start; }
+footer .paper { font-size: 19px; font-weight: 700; color: var(--ink); letter-spacing: -0.015em; }
+footer .authors { margin-top: 10px; line-height: 1.6; }
+footer .authors b { color: var(--ink); }
+footer img { width: 220px; }
+footer .fine { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 18px; font-size: 12px; }
+@media (max-width: 640px) { footer .wrap { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav class="top" aria-label="Sections">
+  <div class="wrap">
+    <a class="brand" href="#top">Strata</a>
+    <ul>
+      <li><a href="#pipeline">Pipeline</a></li>
+      <li><a href="#distortion">Distortion</a></li>
+      <li class="opt"><a href="#effects">Effects</a></li>
+      <li><a href="#results">Results</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="wrap reveal">
+    <h1>Name a domain.<br><span class="blue">Strata builds the benchmark.</span></h1>
+    <p class="domains">Healthcare <i>·</i> Education <i>·</i> Commerce <i>·</i> Logistics <i>·</i> <b>Your&nbsp;Domain</b></p>
+    <p class="lead" style="margin-left:auto;margin-right:auto">Generated documents for AI training and evaluation, each with an answer key known by construction.</p>
+    <div class="cta"><a class="btn" href="#pipeline">See how it works</a><a class="link" href="#distortion">Try the distortion</a></div>
+  </div>
+  <div class="wipe reveal" id="wipe" style="--x:50%" role="slider" aria-label="Compare the clean page with the captured page" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" tabindex="0">
+    <img src="assets/img/pipeline/pair_distorted.jpg" alt="The invoice after seeded capture effects, with the six answer-key boxes carried through the warp">
+    <img class="top-img" src="assets/img/pipeline/pair_clean.jpg" alt="The generated invoice, clean, with six answer-key values boxed">
+    <span class="lab l">Clean</span><span class="lab r">After capture</span>
+    <span class="bar"></span><span class="knob" aria-hidden="true">⟷</span>
+  </div>
+</header>
+<p class="wipe-note center wrap">Drag across the page. The same six boxes are carried through the warp, not re-detected.</p>
+
+<!-- ============ PIPELINE ============ -->
+<section class="white" id="pipeline">
+  <div class="wrap">
+    <div class="center reveal">
+      <p class="eyebrow">Six parametric stages</p>
+      <h2>One record, from idea to page.</h2>
+      <p class="lead">Open-weight LLMs write the content. Code assigns the identifiers, resolves the joins and writes the answer key. Follow record <span class="mono" style="color:var(--accent)">lab_005</span> through every stage.</p>
+    </div>
+
+    <div class="stepper reveal" role="tablist" aria-label="Pipeline stages">
+      <button class="step" role="tab" style="--zc:var(--z0)" data-s="0" aria-selected="true"><span class="num">1</span><b>Domain</b></button>
+      <button class="step" role="tab" style="--zc:var(--z1)" data-s="1" aria-selected="false"><span class="num">2</span><b>Schema</b></button>
+      <button class="step" role="tab" style="--zc:var(--z2)" data-s="2" aria-selected="false"><span class="num">3</span><b>Instance</b></button>
+      <button class="step" role="tab" style="--zc:var(--z3)" data-s="3" aria-selected="false"><span class="num">4</span><b>Join</b></button>
+      <button class="step" role="tab" style="--zc:var(--z4)" data-s="4" aria-selected="false"><span class="num">5</span><b>Document</b></button>
+      <button class="step" role="tab" style="--zc:var(--z5)" data-s="5" aria-selected="false"><span class="num">6</span><b>Augmentation</b></button>
+      <button class="step" role="tab" style="--zc:var(--z6)" data-s="6" aria-selected="false"><span class="num">→</span><b>Answer key</b></button>
+    </div>
+
+    <div class="stage-view reveal" id="stageView" role="tabpanel" style="--zc:var(--z0)">
+      <!-- 0 domain -->
+      <div class="panel on" data-p="0">
+        <div class="txt"><span class="k">Stage 1 · Domain</span><h3>A sentence becomes a domain.</h3><p>A prompt and a vertical topic seed yield a domain description.</p><div class="params"><span>vertical topic</span><span>seed</span></div></div>
+        <div class="fig"><p class="quote">“Outpatient clinical records: patients, physicians, visits, and the prescriptions and lab results filed under each visit.”</p></div>
+      </div>
+      <!-- 1 schema -->
+      <div class="panel" data-p="1">
+        <div class="txt"><span class="k">Stage 2 · Schema</span><h3>Classes, linked by foreign keys.</h3><p>The description yields a linked set of schemas. Graph complexity is set by parameter.</p><div class="params"><span>entity count</span><span>max depth</span></div></div>
+        <div class="fig"><svg viewBox="0 0 1000 540" role="img" aria-label="Schema: Visit references Patient and Physician; Prescription and LabResult reference Visit."><use href="#g-schema"/></svg></div>
+      </div>
+      <!-- 2 instance -->
+      <div class="panel" data-p="2">
+        <div class="txt"><span class="k">Stage 3 · Instance</span><h3>Records that obey the schema.</h3><p>Each class is populated under distribution statistics and value constraints.</p><div class="params"><span>records per entity</span><span>null rate</span></div></div>
+        <div class="fig"><table class="kv"><tr><th>object_id</th><td class="hi">lab_005</td></tr><tr><th>class</th><td>LabResult</td></tr><tr><th>test</th><td>HbA1c</td></tr><tr><th>value</th><td>7.4</td></tr><tr><th>unit</th><td>%</td></tr><tr><th>reference_range</th><td>4.0-6.0</td></tr><tr><th>flag</th><td>H</td></tr><tr><th>visit_id →</th><td>visit_003</td></tr></table></div>
+      </div>
+      <!-- 3 join -->
+      <div class="panel" data-p="3">
+        <div class="txt"><span class="k">Stage 4 · Join</span><h3>The records one page will print.</h3><p>Code assembles the records into a join graph, one per document.</p><div class="params"><span>orphan rate</span><span>FK rules</span></div></div>
+        <div class="fig"><svg viewBox="0 0 1000 540" role="img" aria-label="Join graph: lab_005, lab_006 and lab_007 reference visit_003, which references patient_001 and physician_001."><use href="#g-join"/></svg></div>
+      </div>
+      <!-- 4 document -->
+      <div class="panel" data-p="4">
+        <div class="txt"><span class="k">Stage 5 · Document</span><h3>A page, rendered.</h3><p>Each join graph is rendered as a page; layout and writing style are drawn from a parameterised range.</p><div class="params"><span>layout variants</span><span>style brief</span></div></div>
+        <div class="fig"><img src="assets/img/pipeline/doc_clean.jpg" alt="The lab report rendered from the join graph, with the lab_005 row boxed" loading="lazy"></div>
+      </div>
+      <!-- 5 augmentation -->
+      <div class="panel" data-p="5">
+        <div class="txt"><span class="k">Stage 6 · Augmentation</span><h3>Harder, on purpose.</h3><p>Seeded distortion degrades the page. The box is carried through the warp, so the annotation is unaffected.</p><div class="params"><span>noise level</span><span>distortions</span></div></div>
+        <div class="fig"><img src="assets/img/pipeline/doc_distorted.jpg" alt="The lab report after rotation, crumple, stains, background and noise; the lab_005 box follows the row" loading="lazy"></div>
+      </div>
+      <!-- 6 answer key -->
+      <div class="panel" data-p="6">
+        <div class="txt"><span class="k">Output · Answer key</span><h3>Exact, by construction.</h3><p>Every page arrives with the records and joins it prints, written by code from the stages before it.</p></div>
+        <div class="fig"><div class="code">{
+  "document_id": "doc-med-1-lab-report",
+  "scope": [<span class="h">"lab_005"</span>, "lab_006", "lab_007",
+            "patient_001", "physician_001", "visit_003"],
+  "joins_on_page": [
+    { "child_object": <span class="h">"lab_005"</span>,
+      "column": "visit_id",
+      "parent_object": "visit_003" },
+    <span class="c">… four more joins</span>
+  ]
+}</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DISTORTION DIAL ============ -->
+<section class="night" id="distortion">
+  <div class="wrap">
+    <div class="center reveal">
+      <p class="eyebrow">Distortion</p>
+      <h2>Turn up the difficulty.<br>The answer key holds.</h2>
+      <p class="lead">One parameter samples a seeded recipe of capture effects. Every box moves with the page.</p>
+    </div>
+    <div class="dial reveal">
+      <div class="frame" id="frame"></div>
+      <div class="controls">
+        <div class="val" id="dval">0.0<small>difficulty</small></div>
+        <input type="range" id="diff" min="0" max="10" step="1" value="0" aria-label="Difficulty" style="--p:0%">
+        <div class="boxes-ok"><b id="bok">6 / 6</b>boxes in frame</div>
+      </div>
+      <div class="chips" id="chips" aria-live="polite"></div>
+      <div class="legend" id="legend"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STACK ============ -->
+<section class="white">
+  <div class="wrap">
+    <div class="center reveal">
+      <p class="eyebrow">Recipes</p>
+      <h2>Stack effects. Replay them exactly.</h2>
+      <p class="lead">A recipe is a seeded list of effects. The same recipe produces the same page, every time, and the page keeps its answer key.</p>
+    </div>
+    <div class="stack reveal">
+      <img src="assets/img/pipeline/stack.jpg" alt="A bill of lading after rotation, shear, crumple, stains and a cork background; the answer-key boxes follow the page" loading="lazy">
+      <div class="recipe" id="recipe"></div>
+    </div>
+    <div class="akey reveal">
+      <div class="akhead"><h3>The answer key for this page</h3><p>Written by code before the page was rendered. Distortion does not change it.</p></div>
+      <div class="akcols">
+        <div><p class="aklabel">Boxed values and their record fields</p><div class="akcode" id="akvals"></div></div>
+        <div><p class="aklabel">Page manifest: records and joins on the page</p><div class="akcode" id="akman"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section id="effects">
+  <div class="wrap">
+    <div class="center reveal">
+      <p class="eyebrow">Effects</p>
+      <h2>Every effect, at full strength.</h2>
+      <p class="lead">Each one is applied to the same lab report at maximum severity. Select an effect to compare it with the clean page.</p>
+      <div class="seg" role="group" aria-label="Filter effects" id="seg">
+        <button aria-pressed="true" data-c="all">All</button>
+        <button aria-pressed="false" data-c="geometric">Geometric</button>
+        <button aria-pressed="false" data-c="optical">Optical</button>
+        <button aria-pressed="false" data-c="color">Colour</button>
+        <button aria-pressed="false" data-c="sensor">Sensor</button>
+      </div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<dialog id="dlg">
+  <button class="x" aria-label="Close" onclick="this.closest('dialog').close()">×</button>
+  <div class="dimg"><figure><img src="assets/img/gallery/clean.jpg" alt="Clean lab report"><figcaption>Clean</figcaption></figure><figure><img id="dimg" alt=""><figcaption id="dcap">Effect</figcaption></figure></div>
+  <div class="dbody"><h3 id="dtitle"></h3><p id="dsum"></p><pre id="drec"></pre></div>
+</dialog>
+
+<!-- ============ RESULTS ============ -->
+<section class="night" id="results">
+  <div class="wrap">
+    <div class="center reveal">
+      <p class="eyebrow">Evaluation</p>
+      <h2>It measures what matters.</h2>
+      <p class="lead">The generated corpus recovers the rankings of public benchmarks. A larger model reads more fields but recovers fewer joins.</p>
+    </div>
+    <div class="stats reveal">
+      <div class="stat"><b>74</b><span>documents</span></div>
+      <div class="stat"><b>123</b><span>records</span></div>
+      <div class="stat"><b>3 × 6</b><span>OCR systems × LLM extractors</span></div>
+    </div>
+    <div class="results reveal">
+      <div class="tablecard">
+        <h3>Schema-guided extraction</h3><p>Field accuracy by OCR source; join and record recall with Mistral OCR.</p>
+        <table class="t1">
+          <thead><tr><th>Extractor</th><th>PaddleOCR</th><th>DeepSeek-OCR</th><th>Mistral</th><th>Join recall</th><th>Record recall</th></tr></thead>
+          <tbody>
+            <tr><td>Gemma 3 4B</td><td>0.777</td><td>0.765</td><td>0.772</td><td>0.571</td><td>24.4%</td></tr>
+            <tr><td>Gemma 3 27B</td><td>0.896</td><td>0.885</td><td>0.926</td><td>0.388</td><td>65.0%</td></tr>
+            <tr><td>Qwen3 8B</td><td>0.907</td><td>0.927</td><td>0.955</td><td>0.918</td><td>82.1%</td></tr>
+            <tr><td>Qwen3 32B</td><td>0.934</td><td>0.936</td><td class="best">0.981</td><td class="best">0.959</td><td class="best">90.2%</td></tr>
+            <tr><td>DeepSeek flash</td><td>0.919</td><td>0.912</td><td>0.954</td><td>0.571</td><td>74.0%</td></tr>
+            <tr><td>DeepSeek pro</td><td>0.924</td><td>0.908</td><td>0.959</td><td>0.653</td><td>78.0%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="chartcard">
+        <h3>More fields, fewer joins</h3><p>Gemma 3, 4B → 27B, Mistral OCR.</p>
+        <svg viewBox="0 0 420 300" role="img" aria-label="Gemma 3 from 4B to 27B: field accuracy rises from 0.772 to 0.926; join recall falls from 0.571 to 0.388.">
+          <g font-family="inherit" font-size="15" fill="#a1a1a6">
+            <line x1="50" x2="410" y1="30" y2="30" stroke="#2c2c2e"/><text x="40" y="35" text-anchor="end">1.0</text>
+            <line x1="50" x2="410" y1="100" y2="100" stroke="#2c2c2e"/><text x="40" y="105" text-anchor="end">0.8</text>
+            <line x1="50" x2="410" y1="170" y2="170" stroke="#2c2c2e"/><text x="40" y="175" text-anchor="end">0.6</text>
+            <line x1="50" x2="410" y1="240" y2="240" stroke="#2c2c2e"/><text x="40" y="245" text-anchor="end">0.4</text>
+            <text x="140" y="280" text-anchor="middle" fill="#f5f5f7" font-weight="600">4B</text>
+            <text x="300" y="280" text-anchor="middle" fill="#f5f5f7" font-weight="600">27B</text>
+          </g>
+          <!-- y = 30 + (1 - v) * 350 -->
+          <line x1="140" y1="109.8" x2="300" y2="55.9" stroke="#7d8cff" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="140" cy="109.8" r="7" fill="#7d8cff"/><circle cx="300" cy="55.9" r="7" fill="#7d8cff"/>
+          <line x1="140" y1="180.2" x2="300" y2="244.2" stroke="#a1a1a6" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="140" cy="180.2" r="7" fill="#a1a1a6"/><circle cx="300" cy="244.2" r="7" fill="#a1a1a6"/>
+          <g font-size="16" font-weight="700" fill="#f5f5f7">
+            <text x="126" y="115" text-anchor="end">0.772</text><text x="314" y="61">0.926</text>
+            <text x="126" y="186" text-anchor="end">0.571</text><text x="314" y="250">0.388</text>
+          </g>
+          <g font-size="14" font-weight="600"><text x="314" y="80" fill="#7d8cff">field accuracy</text><text x="314" y="226" fill="#a1a1a6">join recall</text></g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AGENTIC ============ -->
+<section class="white">
+  <div class="wrap">
+    <div class="center reveal">
+      <p class="eyebrow">Agentic workflows</p>
+      <h2>Strata promotes agentic workflow automation.</h2>
+      <p class="lead">An agent reads the page, extracts the fields and links the records. The answer key scores each step separately.</p>
+    </div>
+    <div class="flow reveal">
+      <div class="node first"><div class="dot">1</div><h3>Page</h3><p>&nbsp;</p></div>
+      <div class="node"><div class="dot">2</div><h3>OCR</h3><p>accuracy per OCR source</p></div>
+      <div class="node"><div class="dot">3</div><h3>Extract</h3><p>field accuracy</p></div>
+      <div class="node"><div class="dot">4</div><h3>Link</h3><p>join and record recall</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <div class="paper">Strata: A Domain-Agnostic Parametric Generative Pipeline for Agentic AI Benchmarking</div>
+      <div class="authors"><b>Farees Siddiqui</b> · farees.siddiqui@ontariotechu.net &nbsp;·&nbsp; <b>Ken Pu</b> · ken.pu@ontariotechu.ca<br>Faculty of Science, Ontario Tech University, Oshawa, Canada · CASCON 2026, York University</div>
+    </div>
+    <img src="assets/img/ontariotech.png" alt="Ontario Tech University">
+    <div class="fine">Every image on this page was produced by Strata's distortion pipeline from generated case-study documents. Recipes are seeded and replay exactly.</div>
+  </div>
+</footer>
+
+<!-- shared SVG symbols: schema and join graph -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <marker id="ak" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1d1d1f"/></marker>
+    <marker id="aa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#2f45c8"/></marker>
+    <style>
+      .nn { font: 650 40px "Schibsted Grotesk", var(--sans); fill: #1d1d1f; }
+      .nm { font: 600 36px "JetBrains Mono", monospace; fill: #1d1d1f; }
+      .nb { font: 700 36px "JetBrains Mono", monospace; fill: #2f45c8; }
+      .nbs { font: 750 40px "Schibsted Grotesk", var(--sans); fill: #2f45c8; }
+      .el { font: 500 26px "JetBrains Mono", monospace; fill: #6e6e73; }
+      .ela { font: 700 26px "JetBrains Mono", monospace; fill: #2f45c8; }
+      .bx { fill: #fff; stroke: #1d1d1f; stroke-width: 3; }
+      .bxa { fill: #e4e8fb; stroke: #2f45c8; stroke-width: 6; }
+    </style>
+    <g id="g-schema">
+      <rect class="bx" x="10" y="20" width="400" height="100" rx="16"/><text class="nn" x="210" y="84" text-anchor="middle">Patient</text>
+      <rect class="bx" x="590" y="20" width="400" height="100" rx="16"/><text class="nn" x="790" y="84" text-anchor="middle">Physician</text>
+      <rect class="bx" x="300" y="220" width="400" height="100" rx="16"/><text class="nn" x="500" y="284" text-anchor="middle">Visit</text>
+      <rect class="bx" x="10" y="420" width="420" height="100" rx="16"/><text class="nn" x="220" y="484" text-anchor="middle">Prescription</text>
+      <rect class="bxa" x="570" y="420" width="420" height="100" rx="16"/><text class="nbs" x="780" y="484" text-anchor="middle">LabResult</text>
+      <line x1="390" y1="220" x2="250" y2="124" stroke="#1d1d1f" stroke-width="3" marker-end="url(#ak)"/><text class="el" x="225" y="195" text-anchor="end">patient_id</text>
+      <line x1="610" y1="220" x2="750" y2="124" stroke="#1d1d1f" stroke-width="3" marker-end="url(#ak)"/><text class="el" x="775" y="195">physician_id</text>
+      <line x1="250" y1="420" x2="390" y2="324" stroke="#1d1d1f" stroke-width="3" marker-end="url(#ak)"/><text class="el" x="225" y="385" text-anchor="end">visit_id</text>
+      <line x1="750" y1="420" x2="610" y2="324" stroke="#2f45c8" stroke-width="5" marker-end="url(#aa)"/><text class="ela" x="775" y="385">visit_id</text>
+    </g>
+    <g id="g-join">
+      <rect class="bx" x="10" y="20" width="420" height="100" rx="16"/><text class="nm" x="220" y="82" text-anchor="middle">patient_001</text>
+      <rect class="bx" x="570" y="20" width="420" height="100" rx="16"/><text class="nm" x="780" y="82" text-anchor="middle">physician_001</text>
+      <rect class="bx" x="300" y="220" width="400" height="100" rx="16"/><text class="nm" x="500" y="282" text-anchor="middle">visit_003</text>
+      <rect class="bxa" x="0" y="420" width="320" height="100" rx="16"/><text class="nb" x="160" y="482" text-anchor="middle">lab_005</text>
+      <rect class="bx" x="340" y="420" width="320" height="100" rx="16"/><text class="nm" x="500" y="482" text-anchor="middle">lab_006</text>
+      <rect class="bx" x="680" y="420" width="320" height="100" rx="16"/><text class="nm" x="840" y="482" text-anchor="middle">lab_007</text>
+      <line x1="390" y1="220" x2="250" y2="124" stroke="#1d1d1f" stroke-width="3" marker-end="url(#ak)"/><text class="el" x="225" y="195" text-anchor="end">patient_id</text>
+      <line x1="610" y1="220" x2="750" y2="124" stroke="#1d1d1f" stroke-width="3" marker-end="url(#ak)"/><text class="el" x="775" y="195">physician_id</text>
+      <line x1="160" y1="420" x2="380" y2="324" stroke="#2f45c8" stroke-width="5" marker-end="url(#aa)"/><text class="ela" x="150" y="385" text-anchor="end">visit_id</text>
+      <line x1="500" y1="420" x2="500" y2="324" stroke="#1d1d1f" stroke-width="3" marker-end="url(#ak)"/>
+      <line x1="840" y1="420" x2="620" y2="324" stroke="#1d1d1f" stroke-width="3" marker-end="url(#ak)"/>
+    </g>
+  </defs>
+</svg>
+
+<script src="assets/data.js"></script>
+<script>
+(function () {
+  const D = window.STRATA;
+
+  /* reveal on scroll */
+  const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.12 }) : null;
+  document.querySelectorAll('.reveal').forEach(el => io ? io.observe(el) : el.classList.add('in'));
+
+  /* before/after wipe */
+  const w = document.getElementById('wipe');
+  const setX = pct => { pct = Math.max(0, Math.min(100, pct)); w.style.setProperty('--x', pct + '%'); w.setAttribute('aria-valuenow', Math.round(pct)); };
+  const fromEvent = e => { const r = w.getBoundingClientRect(); setX((e.clientX - r.left) / r.width * 100); };
+  let drag = false;
+  w.addEventListener('pointerdown', e => { drag = true; w.setPointerCapture(e.pointerId); fromEvent(e); });
+  w.addEventListener('pointermove', e => { if (drag) fromEvent(e); });
+  w.addEventListener('pointerup', () => drag = false);
+  w.addEventListener('keydown', e => { const v = +w.getAttribute('aria-valuenow'); if (e.key === 'ArrowLeft') setX(v - 5); if (e.key === 'ArrowRight') setX(v + 5); });
+
+  /* pipeline stepper */
+  const view = document.getElementById('stageView');
+  const steps = [...document.querySelectorAll('.step')];
+  const show = i => {
+    steps.forEach((s, j) => s.setAttribute('aria-selected', j === i));
+    view.style.setProperty('--zc', `var(--z${i})`);
+    view.querySelectorAll('.panel').forEach(p => p.classList.toggle('on', +p.dataset.p === i));
+  };
+  steps.forEach((s, i) => s.addEventListener('click', () => show(i)));
+  document.querySelector('.stepper').addEventListener('keydown', e => {
+    const i = steps.findIndex(s => s.getAttribute('aria-selected') === 'true');
+    if (e.key === 'ArrowRight') { show((i + 1) % 7); steps[(i + 1) % 7].focus(); }
+    if (e.key === 'ArrowLeft') { show((i + 6) % 7); steps[(i + 6) % 7].focus(); }
+  });
+
+  /* difficulty dial */
+  const frame = document.getElementById('frame'), range = document.getElementById('diff');
+  const imgs = D.slider.map((s, i) => { const im = new Image(); im.src = s.src; im.alt = `The invoice at difficulty ${s.difficulty.toFixed(1)}`; if (i === 0) im.className = 'on'; frame.appendChild(im); return im; });
+  const dval = document.getElementById('dval'), chips = document.getElementById('chips'), bok = document.getElementById('bok');
+  const setD = k => {
+    const s = D.slider[k];
+    imgs.forEach((im, j) => im.classList.toggle('on', j === k));
+    dval.firstChild.nodeValue = s.difficulty.toFixed(1);
+    range.style.setProperty('--p', (k * 10) + '%');
+    bok.textContent = `${s.boxes_in_frame} / ${D.keys.length}`;
+    chips.innerHTML = s.ops.length ? s.ops.map(o => `<span class="chip">${o.replace(/_/g, ' ')}</span>`).join('') : '<span class="chip none">clean page</span>';
+  };
+  range.addEventListener('input', () => setD(+range.value));
+  setD(0);
+  document.getElementById('legend').innerHTML = D.keys.map(k => `<span><i style="border-color:${k.colour}"></i><span class="mono">${k.field}</span></span>`).join('');
+
+  /* stacked recipe */
+  const st = D.stack_recipe;
+  document.getElementById('recipe').innerHTML = `{\n  "seed": ${st.seed},\n  "steps": [\n` +
+    st.steps.map(x => `    { "op": <span class="o">"${x.op}"</span>, "severity": ${(+x.severity).toFixed(2)} }`).join(',\n') + `\n  ]\n}`;
+
+  /* answer key for the stacked page */
+  const K = D.stack_key, q = v => typeof v === 'string' ? `"${v}"` : v;
+  document.getElementById('akvals').innerHTML = '{\n' + K.boxed.map(b =>
+    `  <span class="f">"${b.field}"</span>: <span class="v">${q(b.value)}</span>` + (String(b.value) !== b.printed ? ` <span class="c">// printed "${b.printed}"</span>` : '')).join(',\n') + '\n}';
+  document.getElementById('akman').innerHTML = `{\n  "document_id": "${K.document_id}",\n  "root_object": "${K.root_object}",\n  "scope": [\n` +
+    K.scope.reduce((a, x, i) => (i % 2 ? a[a.length - 1].push(x) : a.push([x]), a), []).map(r => '    ' + r.map(x => `"${x}"`).join(', ')).join(',\n') + `\n  ],\n  "joins_on_page": [\n` +
+    K.joins_on_page.map(j => `   { "child_object": <span class="f">"${j.child_object}"</span>, "column": "${j.column}",\n     "parent_object": <span class="f">"${j.parent_object}"</span> }`).join(',\n') +
+    `\n  ]\n}`;
+
+  /* gallery */
+  const grid = document.getElementById('grid'), dlg = document.getElementById('dlg');
+  const cat = { geometric: 'Geometric', optical: 'Optical', color: 'Colour', sensor: 'Sensor' };
+  const render = c => {
+    grid.innerHTML = D.gallery.filter(g => c === 'all' || g.category === c).map(g =>
+      `<button class="card" data-n="${g.name}"><img src="${g.src}" alt="${g.label}: ${g.summary}" loading="lazy"><span class="t"><b>${g.label}</b><span>${cat[g.category]}</span></span></button>`).join('');
+  };
+  render('all');
+  document.getElementById('seg').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    document.querySelectorAll('#seg button').forEach(x => x.setAttribute('aria-pressed', x === b));
+    render(b.dataset.c);
+  });
+  grid.addEventListener('click', e => {
+    const c = e.target.closest('.card'); if (!c) return;
+    const g = D.gallery.find(x => x.name === c.dataset.n);
+    document.getElementById('dimg').src = g.src; document.getElementById('dimg').alt = g.label;
+    document.getElementById('dcap').textContent = g.label;
+    document.getElementById('dtitle').textContent = g.label;
+    document.getElementById('dsum').textContent = g.summary.charAt(0).toUpperCase() + g.summary.slice(1);
+    document.getElementById('drec').textContent = JSON.stringify({ op: g.recipe.op, severity: g.recipe.severity, params: g.recipe.params, seed: g.recipe.seed }, null, 2);
+    dlg.showModal();
+  });
+  dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+})();
+</script>
+</body>
+</html>
